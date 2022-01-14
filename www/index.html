@@ -93,14 +93,43 @@
       })
     }
 
+    function searchDefence(){
+      let defence=parseInt($("#defence").val());
+      let TestDataClass=ncmb.DataStore(db);
+      TestDataClass.equalTo("defence",defence).fetchAll()
+      .then(function(results){
+        showResults(results);
+      })
+    }
+
+    function searchDefenceLT(){
+      let defence=parseInt($("#defence").val());
+      let TestDataClass=ncmb.DataStore(db);
+      TestDataClass.lessThan("defence",defence).fetchAll()
+      .then(function(results){
+        showResults(results);
+      })
+    }
+
+    function searchDefenceGT(){
+      let defence=parseInt($("#defence").val());
+      let TestDataClass=ncmb.DataStore(db);
+      TestDataClass.greaterThan("defence",defence).fetchAll()
+      .then(function(results){
+        showResults(results);
+      })
+    }
+
     function fetchMonster(){
       let TDCdata=new UTdata();
+      let defence=parseInt($("#defence").val());
       let attack=parseInt($("#attack").val());
       let level=parseInt($("#level").val());
       let name =$("#name").val();
       TDCdata.set("name",name)
       TDCdata.set("level",level)
-      TDCdata.set("attack",attack).save()
+      TDCdata.set("attack",attack)
+      TDCdata.set("defence",defence).save()
        .then(function(results){
         showResults(results);
       })
@@ -138,9 +167,13 @@
     <label for="level">level:</label>
     <input id="level" type="number" placeholder="monster level">
   </div>
-   <div>
+  <div>
     <label for="attack">attack:</label>
     <input id="attack" type="number" placeholder="monster attack">
+  </div>
+  <div>
+    <label for="defence">defence:</label>
+    <input id="defence" type="number" placeholder="monster defence">
   </div>
   <div id="button">
     <button class="btn" onclick="fetchAll()">Fetch All</button>
@@ -151,7 +184,10 @@
     <button class="btn" onclick="searchLevelGT()">Level &gt</button><br>
     <button class="btn" onclick="searchAttackLT()">Attack &lt</button>
     <button class="btn" onclick="searchAttack()">Attack</button>
-    <button class="btn" onclick="searchAttackGT()">Attack &gt</button>
+    <button class="btn" onclick="searchAttackGT()">Attack &gt</button><br>
+    <button class="btn" onclick="searchDefenceLT()">Defence &lt</button>
+    <button class="btn" onclick="searchDefence()">Defence</button>
+    <button class="btn" onclick="searchDefenceGT()">Defence &gt</button>
 
   </div>
   <div id="message">message area</div>
