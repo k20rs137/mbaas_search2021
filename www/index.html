@@ -95,13 +95,13 @@
 
     function fetchMonster(){
       let TDCdata=new UTdata();
-      let value =parseInt($("#data").val());
       let attack=parseInt($("#attack").val());
       let level=parseInt($("#level").val());
       let name =$("#name").val();
-      TDCdata.set("name",name).save()
+      TDCdata.set("name",name)
+      TDCdata.set("level",level)
+      TDCdata.set("attack",attack).save()
        .then(function(results){
-        $("#display").removeClass();
         showResults(results);
       })
     }
