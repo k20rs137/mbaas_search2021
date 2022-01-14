@@ -14,12 +14,19 @@
     let ncmb = new NCMB(appKey, clientKey);
     // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
     const db = "m";
+    let UTdata = ncmb.DataStore("m");
 
     function fetchAll() {
       let TestDataClass = ncmb.DataStore(db);
       TestDataClass.order("name",false).fetchAll()
         .then(function(results) {
+          let msg = "";
+          for (let i = 0; i < results.length; i++) {
+            msg += results[i].get("name")+results[i].get("level")+results[i].get("attack") + "<br>";
+          }
+          $("#display").removeClass();
           showResults(results);
+          $("#display").html(msg);
         })
     }
     
@@ -86,6 +93,20 @@
       })
     }
 
+    function fetchMonster(){
+      let TDCdata=new UTdata();
+      let value =parseInt($("#data").val());
+      let attack=parseInt($("#attack").val());
+      let level=parseInt($("#level").val());
+      let name =$("#name").val();
+      TDCdata.set("name",name).save()
+       .then(function(results){
+        $("#display").removeClass();
+        showResults(results);
+      })
+    }
+
+
 
 
     function showResults(results) {
@@ -123,7 +144,8 @@
   </div>
   <div id="button">
     <button class="btn" onclick="fetchAll()">Fetch All</button>
-    <button class="btn" onclick="searchName()">Name</button><br>
+    <button class="btn" onclick="searchName()">Name</button>
+    <button class="btn" onclick="fetchMonster()">new monster</button><br>
     <button class="btn" onclick="searchLevelLT()">Level &lt</button>
     <button class="btn" onclick="searchLevel()">Level</button>
     <button class="btn" onclick="searchLevelGT()">Level &gt</button><br>
